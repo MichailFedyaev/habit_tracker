@@ -1,15 +1,15 @@
 from django.urls import path, include
-from . import views
+from .views import (HabitPublicListAPIView, HabitCreateAPIView, HabitDestroyAPIView, HabitListAPIView,
+                    HabitUpdateAPIView, HabitRetrieveAPIView)
 
 app_name = 'habits'
 
-#router = DefaultRouter()
-#router.register(r'course', CourseViewSet, basename='course')
 
 urlpatterns = [
-    path("", views.HabitListAPIView.as_view(), name="habit_list"),
-    path("habit/<int:pk>", views.HabitRetrieveAPIView.as_view(), name="habit_retrieve"),
-    path("habit/create", views.HabitCreateAPIView.as_view(), name="habit_create"),
-    path("habit/<int:pk>/update", views.HabitUpdateAPIView.as_view(), name="habit_update"),
-    path("habit/<int:pk>/delete", views.HabitDestroyAPIView.as_view(), name="habit_delete"),
-] #+ router.urls
+    path("", HabitListAPIView.as_view(), name="habit_list"),
+    path("habit/<int:pk>", HabitRetrieveAPIView.as_view(), name="habit_retrieve"),
+    path("habit/create", HabitCreateAPIView.as_view(), name="habit_create"),
+    path("habit/<int:pk>/update", HabitUpdateAPIView.as_view(), name="habit_update"),
+    path("habit/<int:pk>/delete", HabitDestroyAPIView.as_view(), name="habit_delete"),
+    path("habit/public/", HabitPublicListAPIView.as_view(), name="habit_public_list"),
+]
