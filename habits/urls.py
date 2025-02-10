@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from .views import (HabitPublicListAPIView, HabitCreateAPIView, HabitDestroyAPIView, HabitListAPIView,
                     HabitUpdateAPIView, HabitRetrieveAPIView)
 

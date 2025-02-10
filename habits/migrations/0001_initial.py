@@ -26,8 +26,11 @@ class Migration(migrations.Migration):
                 ('award', models.CharField(blank=True, max_length=50, null=True, verbose_name='Вознаграждение')),
                 ('execution_time', models.IntegerField(default=0, verbose_name='Время выполнения (в секундах)')),
                 ('is_public', models.BooleanField(default=False, verbose_name='Признак публичности')),
-                ('related_habit', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='habits.habit', verbose_name='Связанная привычка')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь')),
+                ('related_habit', models.ForeignKey(blank=True, null=True,
+                                                    on_delete=django.db.models.deletion.SET_NULL, to='habits.habit',
+                                                    verbose_name='Связанная привычка')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
+                                           verbose_name='Пользователь')),
             ],
             options={
                 'verbose_name': 'Привычка',

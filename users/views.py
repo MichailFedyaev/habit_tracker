@@ -10,9 +10,12 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
 
     def get_serializer_class(self):
-        if (self.action in ("retrieve", "update", "partial_update", "destroy")
-                and self.request.user.email == self.get_object().email):
-            return UserSerializer
+        try:
+            if self.action in ("retrieve", "update", "partial_update", "destroy"):
+                if self.request.user.email == self.get_object().email:
+                    return UserSerializer
+        except AttributeError:
+            pass
         return UserCommonSerializer
 
     def get_permissions(self):

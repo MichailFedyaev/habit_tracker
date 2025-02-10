@@ -28,4 +28,4 @@ def validate_pleasant_habit(attrs):
     related_habit = attrs.get('related_habit')
     award = attrs.get('award')
     if is_pleasant_habit and (related_habit or award):
-        raise serializers.ValidationError(f'У приятной привычки не может быть вознаграждения или связанной привычки')
+        raise serializers.ValidationError('У приятной привычки не может быть вознаграждения или связанной привычки')

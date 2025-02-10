@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-from datetime import timedelta
 
 
 load_dotenv(override=True)
@@ -26,7 +25,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
-#STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -45,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'habits',
     'users',
+    'corsheaders',
+    'drf_yasg',
     'rest_framework_simplejwt',
     'django_celery_beat',
     'rest_framework',
@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -134,6 +135,22 @@ USE_I18N = True
 
 USE_TZ = True
 
+# BOT_TOKEN для телеграмм
+
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+
+# Настройки CORS
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://read-and-write.example.com",
+]
+
+CORS_ALLOW_ALL_ORIGINS = False
+
+
 # Настройки для Celery
 # URL-адрес брокера сообщений
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
@@ -142,26 +159,19 @@ CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
 
 # Часовой пояс для работы Celery
-CELERY_TIMEZONE = TIME_ZONE
+CELERY_TIMEZONE = 'Europe/Moscow'
 
 # Флаг отслеживания выполнения задач
 CELERY_TASK_TRACK_STARTED = True
 
+
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+# Использовать локальное время вместо UTC
+# CELERY_ENABLE_UTC = False  # Отключаем использование UTC, чтобы Celery работал в локальной таймзоне
+
 # Максимальное время на выполнение задачи
 CELERY_TASK_TIME_LIMIT = 30 * 60
-
-
-#CELERY_BEAT_SCHEDULE = {
-#    'task-user-block': {
-#        'task': 'users.tasks.user_block',
-#        'schedule': timedelta(days=1),
-#    },
-#}
-
-
-
-
-
 
 
 # Static files (CSS, JavaScript, Images)
@@ -174,8 +184,6 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 AUTH_USER_MODEL = "users.User"
-#LOGIN_REDIRECT_URL = "/"
-#LOGIN_URL = "users:login"
 
 
 # Default primary key field type

@@ -10,8 +10,10 @@ class HabitSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         validate_award_and_related_habit(attrs, fields=['related_habit', 'award'])
-        validate_related_habit(attrs, field_name=['related_habit'])
+        validate_related_habit(attrs, field_name='related_habit')
         validate_pleasant_habit(attrs)
+
+        return attrs
 
     class Meta:
         model = Habit
