@@ -6,7 +6,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-@shared_task
 def send_telegram_message(chat_id, message):
     """Сервис для отправки напоминаний в телеграм"""
 
