@@ -4,7 +4,7 @@ from rest_framework import serializers
 def validate_award_and_related_habit(attrs, fields):
     filled_fields = [fields for field in fields if attrs.get(field) not in (None, '')]
     if len(filled_fields) > 1:
-        raise serializers.ValidationError(f'Можно заполнить только одно из полей: {','.join(fields)}.')
+        raise serializers.ValidationError(f'Можно заполнить только одно из полей: {", ".join(fields)}.')
 
 
 def validate_execution_time(value):
